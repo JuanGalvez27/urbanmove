@@ -12,11 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from urbanmove.users.forms import UserAdminChangeForm
 from urbanmove.users.models import User
 from urbanmove.users.tests.factories import UserFactory
-from urbanmove.users.views import (
-    UserRedirectView,
-    UserUpdateView,
-    user_detail_view,
-)
+from urbanmove.users.views import UserRedirectView, UserUpdateView, user_detail_view
 
 pytestmark = pytest.mark.django_db
 
