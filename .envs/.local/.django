@@ -2,12 +2,16 @@
 # ------------------------------------------------------------------------------
 USE_DOCKER=yes
 IPYTHONDIR=/app/.ipython
+
+# Database
+DATABASE_URL=postgres://debug:debug@postgres/urbanmove
+
 # Redis
 # ------------------------------------------------------------------------------
 REDIS_URL=redis://redis:6379/0
 
 # Celery
-# ------------------------------------------------------------------------------
+CELERY_BROKER_URL=redis://127.0.0.1:6379/1
 
 # Flower
 CELERY_FLOWER_USER=debug
