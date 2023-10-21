@@ -1,25 +1,33 @@
-from django.contrib.auth import get_user_model
-from rest_framework import status
-from rest_framework.decorators import action
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
+from django.contrib.auth import get_user_model, authenticate, login
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
-
-from .serializers import UserSerializer
+from rest_framework.authtoken.models import Token
+from urbanmove.users.api.serializers import UserSerializer, LoginSerializer
 
 User = get_user_model()
 
-
-class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
-    serializer_class = UserSerializer
+class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
-    lookup_field = "pk"
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
 
-    def get_queryset(self, *args, **kwargs):
-        assert isinstance(self.request.user.id, int)
-        return self.queryset.filter(id=self.request.user.id)
+    def perform_create(self, serializer):
+        user = serializer.save()
+        user.set_password(user.password)
+        user.save()
+        return user
 
-    @action(detail=False)
-    def me(self, request):
-        serializer = UserSerializer(request.user, context={"request": request})
-        return Response(status=status.HTTP_200_OK, data=serializer.data)
+class LoginView(generics.CreateAPIView):
+    permission_classes = []
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        email = request.data.get('email')
+        password = request.data.get('password')
+        user = authenticate(email=email, password=password)
+        if user:
+            login(request, user)
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({'token': token.key})
+        else:
+            return Response({'error': 'Incorrect credentials'}, status=status.HTTP_400_BAD_REQUEST)
