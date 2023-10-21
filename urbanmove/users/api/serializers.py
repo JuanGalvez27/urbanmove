@@ -1,16 +1,16 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from urbanmove.users.models import User as UserType
-
 User = get_user_model()
 
 
-class UserSerializer(serializers.ModelSerializer[UserType]):
+class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
-        fields = ["name", "url"]
+        fields = ['id', 'email', 'role', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
 
-        extra_kwargs = {
-            "url": {"view_name": "api:user-detail", "lookup_field": "pk"},
-        }
+class LoginSerializer(serializers.Serializer):
+    email = serializers.CharField()
+    password = serializers.CharField()

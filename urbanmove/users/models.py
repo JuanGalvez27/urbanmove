@@ -1,10 +1,13 @@
 from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField, EmailField
+from django.db.models import CharField, EmailField, BooleanField, TextChoices
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from urbanmove.users.managers import UserManager
 
+class Roles(TextChoices):
+    OPERATOR = 'operator', 
+    PASSENGER = 'passenger'
 
 class User(AbstractUser):
     """
@@ -19,6 +22,7 @@ class User(AbstractUser):
     last_name = None  # type: ignore
     email = EmailField(_("email address"), unique=True)
     username = None  # type: ignore
+    role = CharField(max_length=10, choices=Roles.choices, default=Roles.PASSENGER)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
