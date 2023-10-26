@@ -18,4 +18,3 @@ class TestUserViewSet:
         view.request = request
 
         assert user in view.get_queryset()
-

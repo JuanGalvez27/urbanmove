@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 User = get_user_model()
+
+
 class UserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     first_name = serializers.CharField()
@@ -17,7 +19,7 @@ class UserSerializer(serializers.Serializer):
         instance.last_name = validated_data.get("last_name")
         instance.username = validated_data.get("username")
         instance.email = validated_data.get("email")
-        instance.role= validated_data.get("role")
+        instance.role = validated_data.get("role")
         instance.set_password(validated_data.get("password"))
         instance.save()
 
