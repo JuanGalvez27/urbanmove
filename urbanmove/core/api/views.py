@@ -7,13 +7,14 @@ from urbanmove.core.models import City
 from urbanmove.permissions import IsOperator
 
 from .serializers import CitySerializer
+from urbanmove.authentication import BearerAuthentication
 
 
 class CityModelViewSet(viewsets.ModelViewSet):
     """
     Viewset that provides the standard actions for city
     """
-
+    authentication_classes = [BearerAuthentication]
     permission_classes = [IsOperator]
     serializer_class = CitySerializer
     queryset = City.objects.all()

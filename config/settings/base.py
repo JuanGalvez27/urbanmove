@@ -86,6 +86,7 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
+    'rest_framework_simplejwt',
 ]
 
 LOCAL_APPS = [
@@ -106,6 +107,7 @@ MIGRATION_MODULES = {"sites": "urbanmove.contrib.sites.migrations"}
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
+    "urbanmove.backends.EmailBackend"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"
@@ -324,8 +326,8 @@ SOCIALACCOUNT_FORMS = {"signup": "urbanmove.users.forms.UserSocialSignupForm"}
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+        'urbanmove.authentication.BearerAuthentication',
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
@@ -340,7 +342,7 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "UrbanMove API",
     "DESCRIPTION": "Documentation of API endpoints of UrbanMove",
     "VERSION": "1.0.0",
-    "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
