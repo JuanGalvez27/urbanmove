@@ -1,6 +1,5 @@
 from django.urls import path
 
-from urbanmove.users.api.views import LoginView, RegisterView
 from urbanmove.users.views import user_detail_view, user_redirect_view, user_update_view
 
 app_name = "users"

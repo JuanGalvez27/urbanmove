@@ -1,9 +1,12 @@
 from django.conf import settings
 from django.urls import path
 from rest_framework.routers import DefaultRouter, SimpleRouter
-
-from urbanmove.core.api.views import CityModelViewSet
-from urbanmove.users.api.views import LoginView, RegisterView
+from urbanmove.core.api.views import (
+    CityModelViewSet,
+    BustStopModelViewSet,
+    BusRouteModalViewSet,
+)
+from urbanmove.users.api.views import UserAPI
 
 if settings.DEBUG:
     router = DefaultRouter()
@@ -11,10 +14,11 @@ else:
     router = SimpleRouter()
 
 app_name = "api"
-router.register("city", CityModelViewSet)
+router.register("cities", CityModelViewSet)
+router.register("stops", BustStopModelViewSet)
+router.register("routes", BusRouteModalViewSet)
 urlpatterns = router.urls
 
 urlpatterns += [
-    path("users/register/", RegisterView.as_view(), name="register"),
-    path("users/login/", LoginView.as_view(), name="login"),
+    path("register/", UserAPI.as_view(), name="register"),
 ]

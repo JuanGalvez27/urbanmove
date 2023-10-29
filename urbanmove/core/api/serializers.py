@@ -4,14 +4,20 @@ from urbanmove.core.models import BusRoute, BusStop, City, StopSchedule
 
 
 class CitySerializer(serializers.ModelSerializer):
-    city = serializers.CharField()
+    name = serializers.CharField()
 
     class Meta:
         model = City
-        fields = ["city"]
+        fields = ["name"]
 
 
 class BusStopSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusStop
         fields = ["name", "latitude", "longitude", "city"]
+
+
+class BusRouteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusRoute
+        fields = ["name", "origin", "destination"]

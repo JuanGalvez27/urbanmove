@@ -7,7 +7,7 @@ from urbanmove.users.managers import UserManager
 
 
 class Roles(TextChoices):
-    OPERATOR = ("operator",)
+    OPERATOR = "operator"
     PASSENGER = "passenger"
 
 
@@ -20,11 +20,11 @@ class User(AbstractUser):
 
     # First and last name do not cover name patterns around the globe
     name = CharField(_("Name of User"), blank=True, max_length=255)
-    first_name = None  # type: ignore
-    last_name = None  # type: ignore
+    first_name = CharField(_("Name of User"), blank=True, max_length=255)
+    last_name = CharField(_("Name of User"), blank=True, max_length=255)
     email = EmailField(_("email address"), unique=True)
-    username = None  # type: ignore
-    role = CharField(max_length=10, choices=Roles.choices, default=Roles.PASSENGER)
+    username = CharField(_("Name of User"), blank=True, max_length=255)
+    role = CharField(max_length=10, choices=Roles.choices, default=Roles.PASSENGER, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
