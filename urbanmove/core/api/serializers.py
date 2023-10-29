@@ -15,3 +15,9 @@ class BusStopSerializer(serializers.ModelSerializer):
     class Meta:
         model = BusStop
         fields = ["name", "latitude", "longitude", "city"]
+
+
+class BusRouteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusRoute
+        fields = ["name", "origin", "destination"]
