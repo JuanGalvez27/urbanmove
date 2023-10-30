@@ -27,7 +27,7 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
         return Response(status=status.HTTP_200_OK, data=serializer.data)
 
 
-class UserAPI(APIView):
+class CreateUserAPI(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
