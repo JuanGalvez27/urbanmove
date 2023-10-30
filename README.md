@@ -1,17 +1,26 @@
 # UrbanMove
 
-Behold My Awesome Project!
+Awesome API to provide information and management of the movility in the cities. 
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
-[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-License: MIT
+## Requirements Links
 
-## Settings
-
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
+[Docker](https://docs.docker.com/engine/install/)
 
 ## Basic Commands
+
+In order to launch the project locally enter the project repository and execute
+
+``` plain
+docker compose -f local.yml build
+```
+
+When the construction is complete, run the following command to launch the application
+
+``` plain
+docker compose -f local.yml up
+```
 
 ### Setting Up Your Users
 
@@ -19,7 +28,7 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
 
 - To create a **superuser account**, use this command:
 
-      $ python manage.py createsuperuser
+      docker exec -it urbanmove_local_django python3 manage.py createsuperuser
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
@@ -33,49 +42,15 @@ Running type checks with mypy:
 
 To run the tests, check your test coverage, and generate an HTML coverage report:
 
-    $ coverage run -m pytest
-    $ coverage html
-    $ open htmlcov/index.html
+    $ docker exec -it urbanmove_local_django coverage run -m pytest
 
 #### Running tests with pytest
 
-    $ pytest
+    $ docker exec -it urbanmove_local_django pytest
 
-### Live reloading and Sass CSS compilation
+## API Docs 
 
-Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
+The app's documentation was created with Swagger and can be accessed as follows:
 
-### Celery
-
-This app comes with Celery.
-
-To run a celery worker:
-
-```bash
-cd urbanmove
-celery -A config.celery_app worker -l info
-```
-
-Please note: For Celery's import magic to work, it is important _where_ the celery commands are run. If you are in the same folder with _manage.py_, you should be right.
-
-To run [periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html), you'll need to start the celery beat scheduler service. You can start it as a standalone process:
-
-```bash
-cd urbanmove
-celery -A config.celery_app beat
-```
-
-or you can embed the beat service inside a worker with the `-B` option (not recommended for production use):
-
-```bash
-cd urbanmove
-celery -A config.celery_app worker -B -l info
-```
-
-## Deployment
-
-The following details how to deploy this application.
-
-### Docker
-
-See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
+- Log in as a superuser.
+- Visit http://localhost:8000/api/docs/

@@ -6,7 +6,7 @@ from urbanmove.core.api.views import (
     BustStopModelViewSet,
     BusRouteModalViewSet,
 )
-from urbanmove.users.api.views import UserAPI
+from urbanmove.users.api.views import CreateUserAPI, UserViewSet
 
 if settings.DEBUG:
     router = DefaultRouter()
@@ -14,11 +14,12 @@ else:
     router = SimpleRouter()
 
 app_name = "api"
+router.register("users", UserViewSet)
 router.register("cities", CityModelViewSet)
 router.register("stops", BustStopModelViewSet)
 router.register("routes", BusRouteModalViewSet)
 urlpatterns = router.urls
 
 urlpatterns += [
-    path("register/", UserAPI.as_view(), name="register"),
+    path("register/", CreateUserAPI.as_view(), name="register"),
 ]
